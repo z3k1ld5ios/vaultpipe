@@ -1,0 +1,18 @@
+# Sample vaultpipe configuration file.
+# Place this file (or a copy) in your project root and pass it via --config.
+
+vault_address: "http://127.0.0.1:8200"
+
+secrets:
+  - path: myapp/database
+    mount: secret
+    env_map:
+      username: DB_USER
+      password: DB_PASSWORD
+      host: DB_HOST
+
+  - path: myapp/api
+    mount: secret
+    env_map:
+      token: API_TOKEN
+      endpoint: API_ENDPOINT
