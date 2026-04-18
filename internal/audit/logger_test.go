@@ -83,3 +83,12 @@ func TestLog_OutputIsNewlineTerminated(t *testing.T) {
 		t.Error("expected log output to end with newline")
 	}
 }
+
+func TestProcessExit_ZeroExitCode(t *testing.T) {
+	logger, buf := newTestLogger()
+	_ = logger.ProcessExit("myapp", 0)
+	e := decodeEvent(t, buf)
+	if e.ExitCode == nil || *e.ExitCode != 0 {
+		t.Errorf("expected exit code 0, got %v", e.ExitCode)
+	}
+}
