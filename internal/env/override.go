@@ -42,3 +42,9 @@ func (o *Override) Keys() []string {
 func (o *Override) Len() int {
 	return len(o.overrides)
 }
+
+// Get returns the override value for the given key and whether it was found.
+func (o *Override) Get(key string) (string, bool) {
+	v, ok := o.overrides[key]
+	return v, ok
+}
