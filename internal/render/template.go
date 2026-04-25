@@ -60,3 +60,13 @@ func (r *Renderer) RenderMap(env map[string]string) (map[string]string, error) {
 	}
 	return out, nil
 }
+
+// Keys returns the list of secret keys available in this Renderer.
+// This is useful for debugging or validating that expected secrets are present.
+func (r *Renderer) Keys() []string {
+	keys := make([]string, 0, len(r.secrets))
+	for k := range r.secrets {
+		keys = append(keys, k)
+	}
+	return keys
+}
