@@ -42,6 +42,18 @@ func (inj *Injector) Merge(secrets SecretMap) []string {
 	return env
 }
 
+// Lookup returns the value for the given key from the base environment,
+// along with a boolean indicating whether the key was found.
+func (inj *Injector) Lookup(key string) (string, bool) {
+	for _, entry := range inj.baseEnv {
+		k, v := splitEntry(entry)
+		if k == key {
+			return v, true
+		}
+	}
+	return "", false
+}
+
 // splitEntry splits an environment string of the form KEY=VALUE.
 // If no '=' is present the whole string is treated as the key with an empty value.
 func splitEntry(entry string) (key, value string) {
