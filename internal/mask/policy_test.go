@@ -53,6 +53,14 @@ func TestApplyMap_MasksAllValues(t *testing.T) {
 	}
 }
 
+func TestApplyMap_EmptyMap(t *testing.T) {
+	p := mask.Policy{Level: mask.LevelFull, Placeholder: "[redacted]"}
+	out := p.ApplyMap(map[string]string{})
+	if len(out) != 0 {
+		t.Errorf("expected empty map, got %d entries", len(out))
+	}
+}
+
 func TestDefaultPolicy_Values(t *testing.T) {
 	p := mask.DefaultPolicy()
 	if p.Level != mask.LevelPartial {
