@@ -59,3 +59,17 @@ func TestKeys_ReturnsAllDefaultKeys(t *testing.T) {
 		t.Fatalf("expected 2 keys, got %d", len(keys))
 	}
 }
+
+func TestApplyDefaults_EmptyBase_ReturnsAllDefaults(t *testing.T) {
+	defaults := map[string]string{"HOST": "localhost", "PORT": "8080"}
+	a := NewDefaultsApplier(defaults)
+	out := a.Apply(nil)
+	for k, want := range defaults {
+		if got := out[k]; got != want {
+			t.Errorf("key %q: expected %q, got %q", k, want, got)
+		}
+	}
+	if len(out) != len(defaults) {
+		t.Fatalf("expected %d keys, got %d", len(defaults), len(out))
+	}
+}
