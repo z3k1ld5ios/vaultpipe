@@ -38,6 +38,16 @@ func TestWhitelist_PrefixMatch(t *testing.T) {
 	}
 }
 
+func TestWhitelist_CaseInsensitivePrefix(t *testing.T) {
+	w := NewWhitelist(nil, []string{"app_"})
+	if !w.Allow("APP_SECRET") {
+		t.Error("prefix match should be case-insensitive")
+	}
+	if w.Allow("DB_SECRET") {
+		t.Error("expected DB_SECRET to be rejected with lowercase prefix")
+	}
+}
+
 func TestWhitelist_Filter(t *testing.T) {
 	w := NewWhitelist([]string{"TOKEN"}, []string{"APP_"})
 	input := []string{"TOKEN=abc", "APP_KEY=x", "OTHER=y"}
